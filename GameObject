@@ -1,0 +1,42 @@
+//GObject.java
+
+import java.awt.*;
+import java.awt.Color;
+import java.util.*;
+
+public class GObject{
+  //Attributes
+    private int x, y, dx, dy, width, height;
+    private String name;
+  //Constructor
+    public GObject(int xPos, int yPos, int xVel, int yVel, int w, int h, String type){
+        x = xPos;
+        y = yPos;
+        dx = xVel;
+        dy = yVel;
+        width = w;
+        height = h;
+        name = type;        
+    }
+    
+    public void update()
+  {
+    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+    while(true)
+    {
+      // Run
+      x += dx;
+      y +=dy;
+      
+      
+    }
+} 
+    
+public void paint(Graphics g)
+    {
+         g.setColor(Color.white);g.fillRect(x, y, width, height);
+    }
+    
+ }
+
+                    
