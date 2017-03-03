@@ -1,0 +1,139 @@
+//-----------------
+//
+// Applet Template
+//
+//-----------------
+
+// In order to run an Applet, all of these imports are required:
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+// When running an applet, you will need to extend the applet class and implement Runnable and KeyListener:
+
+// Runnable: allows the use of threads (things that constantly execute your program) and delayed executions of program
+// KeyListener: allows your applet to receive constant input from the keyboard.
+
+public class AppletTemplate extends Applet implements Runnable, KeyListener
+{
+    /* Between the start of your class and the constructor for your 
+    class is where all of your variables can be created. I have 
+    created 3 for you already to help with the construction of the applet. */
+
+    // xDim is the dimension of the applet in the X-direction
+    // yDim is the dimension of the applet in the Y-direction
+    // time is the number of milliseconds between executions of your program
+    int xDim, yDim, time;
+    
+    int x, y;
+    
+    int xPos, yPos, xVel, yVel;
+
+    public AppletTemplate() // This is your constructor. It must be named the same as your class
+    {
+        setFocusable(true); // Allows the use of threads
+        setFocusTraversalKeysEnabled(false); // Makes sure that KeyListener will work properly
+    }
+
+    public void init() // Initializes your applet
+    {
+        xDim = 400;
+        yDim = 300;
+        time = 20;
+        
+        xPos = 10;
+        yPos = 10;
+        
+        this.setSize(xDim, yDim); // Sets the size of your applet according to variables we created earlier
+        setBackground(Color.black); // Sets the background color of your applet
+    }
+
+    public void start() // Starts the execution of your program
+    {
+        Thread time = new Thread(this); // Creates the thread used to run your applet
+        time.start(); // Starts the thread that you have created here ^
+
+        addKeyListener (this); // Creates the KeyListener that can be used in your applet
+    }
+
+    public void stop() // No need to put anything here. By default your applet will close when you click the X
+    {
+        // Nothing goes in this method
+    }
+
+    public void keyPressed(KeyEvent e) // One of the methods for KeyListener. Will detect if a key is Pressed
+    {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) // This is how to detect which key is being input
+        {
+           xPos += 5;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) // This is how to detect which key is being input
+        {
+            // Any code for your KeyListener can go here
+        }
+    }
+
+    public void keyTyped(KeyEvent e) // One of the methods for KeyListener. Will detect if a key is Typed
+    {
+
+    }
+
+    public void keyReleased(KeyEvent e) // One of the methods for KeyListener. Will detect if a key is Released
+    {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) // This is how to detect which key is being input
+        {
+            // Any code for your KeyListener can go here
+        }
+    }
+
+    public void paint(Graphics g) /* This is the paint method. if you want anything to show up in your applet,
+    this is where it will go. keep in mind that the order you paint things
+    does matter. If two things overlap, the one painted second will show on top */
+    {
+        g.setColor(Color.black); // This is how you set the color for painting.
+        g.fillRect(0, 0, xDim, yDim);
+        
+        g.setColor(Color.yellow);
+        g.fillRect(50, 50, 60, 80);
+        
+        g.setColor(Color.magenta);
+        g.fillOval(x, y, 25, 25);
+        
+        
+        
+        // This is how you fill a rectangle with the color you've chosen.
+        // The format is (x position, y position, width, height)
+    }
+
+    public void run() // The run method is where any movement in the applet occurs.
+    {
+        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+        while(true)
+        {
+            // Run
+            //If you want animate anything, the code for that movement goes between these two lines:
+            //---------------------------
+            
+            if (xPos)
+            {
+                
+            }
+            
+            
+
+            //---------------------------
+            try // This is a try/catch loop. It is what allows your thread to continuously operate
+            {
+                Thread.sleep(time); // Here is where the thread delay goes. Remember, time is an integer variable
+            }
+            catch(InterruptedException Ex) // If the thread is unable to operate, here is where it is caught
+            {
+                // Nothing goes here
+            }
+            repaint(); // repaint() recalls paint method. After run is executed, you must repaint new values
+        }
+    }
+}
+
+// Hopefully this helped. I can answer any questions you have on ur mum
