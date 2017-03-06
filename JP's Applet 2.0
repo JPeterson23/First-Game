@@ -1,0 +1,162 @@
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+public class AppletTemplate extends Applet implements Runnable, KeyListener
+{
+ Random rand = new Random();
+ int xDim = 400, yDim = 300, time = 20;
+ int x = 200, y = 200;
+ int width = 20, height = 20;
+ int velX = 0, velY = 0;
+ int width2 = 10, height2 = 10;
+ 
+ int velX2 = rand.nextInt(5);
+ int velY2 = rand.nextInt(5);
+ int x2 = rand.nextInt(200);
+ int y2 = rand.nextInt(200);
+ 
+ 
+ 
+  public AppletTemplate()
+  {
+    
+    setFocusable(true);
+    setFocusTraversalKeysEnabled(false);
+    
+  }
+  
+  public void init()
+  {
+    this.setSize(xDim, yDim);
+    setBackground(Color.black);
+  }
+  
+  public void start()
+  {
+    Thread time = new Thread(this);
+    time.start();
+    
+    addKeyListener (this); 
+  }
+  
+  public void stop()
+  {
+    // Nothing
+  }
+  
+  public void keyPressed(KeyEvent e)
+  {
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+    {
+      velX = 5;
+    }
+    
+    if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+    {
+      velX = -5;
+    }
+    
+    if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+    {
+      velY = 5;
+    }
+    
+    if (e.getKeyCode() == KeyEvent.VK_UP) 
+    {
+      velY = -5;
+    }
+  }
+  
+  public void keyTyped(KeyEvent e)
+  {
+    
+  }
+  
+  public void keyReleased(KeyEvent e)
+  {
+     if (e.getKeyCode() == KeyEvent.VK_RIGHT) 
+    {
+      velX = 0;
+    }
+    
+    if (e.getKeyCode() == KeyEvent.VK_LEFT) 
+    {
+      velX = 0;
+    }
+    
+    if (e.getKeyCode() == KeyEvent.VK_DOWN) 
+    {
+      velY = 0;
+    }
+    
+    if (e.getKeyCode() == KeyEvent.VK_UP) 
+    {
+      velY = 0;
+    }
+  }
+  
+  public void paint(Graphics g)
+  {
+    
+    g.setColor(Color.black); g.fillRect(0, 0, xDim, yDim);
+    g.setColor(Color.white);g.fillRect(x, y, width, height);
+    g.setColor(Color.red); g.fillRect(x2, y2, width2, height2);
+    if ( (x2-10 <= x && x<= x2+10) && (y2-10 <= y && y<= y2+10) )
+       {
+         g.fillRect(0,0, 400, 300);
+       }
+        
+  }
+
+  public void run()
+  {
+    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+    
+    while(true)
+    {
+      // Run
+      
+      x += velX;
+      y += velY;
+      
+      if(x2 > 400)
+        velX2 =-velX2;
+        
+      if(x2 < 0)
+        velX2 =-velX2;
+      else 
+        velX2 = velX2;
+        
+      if(y2 > 300)
+        velY2 =-velY2;
+        
+      if(y2 < 0)
+        velY2 = -velY2;
+      else 
+        velY2 = velY2;
+       
+      x2 += velX2;
+      y2 += velY2;
+      
+      if (x <= 0 || x >= xDim)
+        velX = 0;
+        
+      if (y <= 0 || y >= yDim)
+        velY = 0;
+      
+      try
+      {
+        Thread.sleep(time);
+      }
+      catch(InterruptedException Ex)
+      {
+        // Nothing
+      }
+      repaint();
+    }
+    
+  }
+  
+}
